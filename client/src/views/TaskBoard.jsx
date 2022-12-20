@@ -6,6 +6,7 @@ import Navbar from "../components/NavBar";
 import TaskDetails from "../components/TaskDetails";
 import axios from "axios";
 import { useState } from "react";
+import SearchBar from "../components/searchBar";
 
 function TaskBoard() {
     const [modalVisible, setModalVisibile] = useState(false);
@@ -42,6 +43,7 @@ function TaskBoard() {
                 tasks={tasks}
                 setTasks={setTasks}
             />
+            <SearchBar />
         </div>
     );
 }
