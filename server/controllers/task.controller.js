@@ -56,7 +56,11 @@ module.exports = {
             where: {
                 id: id,
             },
-            data: request.body,
+            data: {
+                title: "Update",
+                description: "Update",
+                dueAt: new Date,
+            },
         });
 
         return response

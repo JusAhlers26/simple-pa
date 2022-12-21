@@ -45,6 +45,20 @@ export const TaskCard = ({ task, setTasks, toggle, ...rest }) => {
             );
         }
     };
+    const handleUpdate = (e) => {
+        e.preventDefault();
+
+        const server = process.env.REACT_APP_SERVER || "http://localhost:8000";
+        axios
+            .delete(`${server}/api/tasks/${task.id}`)
+            .then((response) => {
+                console.log(response);
+                setTasks((prev) => prev.filter((t) => t.id !== task.id));
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -72,7 +86,9 @@ export const TaskCard = ({ task, setTasks, toggle, ...rest }) => {
                 <StyledButton theme="amber" onClick={toggle}>
                     View
                 </StyledButton>
-                <StyledButton theme="cyan">Update</StyledButton>
+                <StyledButton theme="cyan"onClick={handleUpdate}>
+                    Update
+                </StyledButton>
                 <StyledButton theme="red" onClick={handleDelete}>
                     Delete
                 </StyledButton>
