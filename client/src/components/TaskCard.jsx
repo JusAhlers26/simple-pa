@@ -3,7 +3,14 @@ import React from "react";
 import { StyledButton } from "./StyledButton";
 import { AlertIcon } from "@primer/octicons-react";
 
-export const TaskCard = ({ task, setTasks, toggle, ...rest }) => {
+export const TaskCard = ({
+    task,
+    setTasks,
+    toggle,
+    toggleUpdate,
+    selectTask,
+    ...rest
+}) => {
     const calculateDateDiff = () => {
         const date = new Date(task.dueAt);
         const today = new Date();
@@ -45,20 +52,6 @@ export const TaskCard = ({ task, setTasks, toggle, ...rest }) => {
             );
         }
     };
-    const handleUpdate = (e) => {
-        e.preventDefault();
-
-        const server = process.env.REACT_APP_SERVER || "http://localhost:8000";
-        axios
-            .delete(`${server}/api/tasks/${task.id}`)
-            .then((response) => {
-                console.log(response);
-                setTasks((prev) => prev.filter((t) => t.id !== task.id));
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    };
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -83,10 +76,22 @@ export const TaskCard = ({ task, setTasks, toggle, ...rest }) => {
             <h4 className="text-2xl flex-1">{task.title}</h4>
             {calculateDateDiff()}
             <div className="flex gap-5 flex-1 justify-end">
-                <StyledButton theme="amber" onClick={toggle}>
+                <StyledButton
+                    theme="amber"
+                    onClick={() => {
+                        selectTask(task);
+                        toggle();
+                    }}
+                >
                     View
                 </StyledButton>
-                <StyledButton theme="cyan"onClick={handleUpdate}>
+                <StyledButton
+                    theme="cyan"
+                    onClick={() => {
+                        selectTask(task);
+                        toggleUpdate();
+                    }}
+                >
                     Update
                 </StyledButton>
                 <StyledButton theme="red" onClick={handleDelete}>
