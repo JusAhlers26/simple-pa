@@ -57,9 +57,9 @@ module.exports = {
                 id: id,
             },
             data: {
-                title: "Update",
-                description: "Update",
-                dueAt: new Date,
+                title,
+                description,
+                dueAt,
             },
         });
 
